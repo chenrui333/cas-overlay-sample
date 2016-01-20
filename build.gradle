@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
 
 group = 'org.leleuj'
 version = '1.0.0-SNAPSHOT'
@@ -10,11 +13,16 @@ sourceCompatibility = 1.6
 targetCompatibility = 1.6
 
 
-
 repositories {
-        
-     maven { url "http://repo.maven.apache.org/maven2" }
+     jcenter()
 }
+
 dependencies {
-    runtime group: 'org.jasig.cas', name: 'cas-server-webapp', version:'3.5.2'
+    runtime("org.jasig.cas:cas-server-webapp:3.5.2@war") {
+        transitive = true // setting this to true calculates transitive dependencies for addition to the target WAR
+    }
+}
+
+warOverlay {
+    includeWarJars false // whether to include the jar files in the WAR. Default is false. If false, it might be useful to set transitive to `true` for the WAR dependency so its dependencies will be calculated and added
 }
