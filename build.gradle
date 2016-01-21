@@ -1,11 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'war'
-apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 apply from: "http://dl.bintray.com/scalding/generic/waroverlay.gradle"
-
-group = 'org.leleuj'
-version = '1.0.0-SNAPSHOT'
+apply from: "gradle/aggregate.gradle"
 
 description = """CAS overlay 3.5.x"""
 
@@ -14,15 +11,31 @@ targetCompatibility = 1.6
 
 
 repositories {
-     jcenter()
+	jcenter()
 }
 
-dependencies {
-    runtime("org.jasig.cas:cas-server-webapp:3.5.2@war") {
-        transitive = true // setting this to true calculates transitive dependencies for addition to the target WAR
+project.ext {
+    casAddonsVersion = "1.8"
+    springAddonsVersion = "0.1"
+    casVersion = "3.5.2"
+    servletVersion = "2.5"
+}
+
+configurations {
+    all {
+        exclude group:'org.springframework.data', module:'spring-data-mongodb' // spring version 4.0.0.M3 problem
     }
 }
 
-warOverlay {
-    includeWarJars false // whether to include the jar files in the WAR. Default is false. If false, it might be useful to set transitive to `true` for the WAR dependency so its dependencies will be calculated and added
+dependencies {
+    runtime("org.jasig.cas:cas-server-webapp:${casVersion}@war") {
+        transitive = true
+        exclude module: "perf4j"
+    }
+    
+    compile("org.jasig.cas:cas-server-core:${casVersion}") 
+}
+
+war {
+    baseName "cas"
 }

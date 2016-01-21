@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.bmuschko:gradle-tomcat-plugin:2.0"
+    }
+}
+
+
+if (!project.plugins.findPlugin(com.bmuschko.gradle.tomcat.TomcatBasePlugin)) {
+    project.apply plugin: com.bmuschko.gradle.tomcat.TomcatBasePlugin
+}
+if (!project.plugins.findPlugin(com.bmuschko.gradle.tomcat.TomcatPlugin)) {
+    project.apply plugin: com.bmuschko.gradle.tomcat.TomcatPlugin
+}
+
+task run(type: com.bmuschko.gradle.tomcat.tasks.TomcatRunWar) {
+   doFirst {
+       System.properties.put("etc.dir", new File(project.rootDir, 'etc/cas'))
+   }
+    enableSSL = true
+}
+
+dependencies {
+    ["core", "logging-juli", "jasper"].each {
+        tomcat("org.apache.tomcat.embed:tomcat-embed-${it}:${project."tomcat.version"}") {
+            exclude group: "org.eclipse.jdt.core.compiler", module: "ecj"
+        }
+    }
+}
