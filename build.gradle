@@ -6,8 +6,8 @@ apply from: "gradle/aggregate.gradle"
 
 description = """CAS overlay 3.5.x"""
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 
 repositories {
@@ -32,7 +32,7 @@ dependencies {
         transitive = true
         exclude module: "perf4j"
     }
-    
+
     compile("org.jasig.cas:cas-server-core:${casVersion}") 
 }
 
