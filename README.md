@@ -10,4 +10,4 @@ cd cas-overlay-sample
 ./gradlew clean run
 ```
 
-Your CAS server is now started on *http://localhost:8080/cas.
+Your CAS server is now started on *http://localhost:8080/cas*.
