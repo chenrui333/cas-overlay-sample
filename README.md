@@ -1,10 +1,13 @@
-h2. What is this project ?
+## What is this project ?
 
-This *cas-overlay-3.5.x* project is a CAS server demo webapp using Maven overlay for CAS server *version 3.5.x*.
+This _cas-overlay-3.5.x_ project is a CAS server demo webapp using Maven overlay for CAS server _version 3.5.2_.
 
-h2. Quick start & test 
+## Quick start & test 
 
-To start quickly, build the project and launch the web app with jetty :<pre><code>cd cas-overlay-3.5.x
-mvn clean install jetty:run</code></pre>
+To start quickly, currently the project only works with embedded tomcat as the issue with Gradle overlay plugin
+```
+cd cas-overlay-sample
+./gradlew clean run
+```
 
-Your CAS server is now started on *http://localhost:8080/cas*.
+Your CAS server is now started on *http://localhost:8080/cas.
